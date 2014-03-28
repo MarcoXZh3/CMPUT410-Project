@@ -1,0 +1,32 @@
+<% content_for :title do %>
+  All staffs - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  Staffs
+<% end %>
+
+<% content_for :content_block do %>
+  <ul class="members"><strong>Members</strong>
+   <% @shetler_staffs.each do |staff| %>
+    <li><div>
+     <%= link_to staff, action: 'staff', staff_id: staff %>
+    <div></li>
+   <% end %>
+  </ul>
+  <ul class="volunteers"><strong>Volunteers</strong>
+   <% @volunteers.each do |volunteer| %>
+    <li><div>
+      <%= link_to volunteer, action: 'staff', staff_id: volunteer %>
+      <% if volunteer.start_date == nil %>
+       (Hanging request)
+      <% elsif volunteer.accepted == false %>
+       (Not accepted)
+      <% end %>
+    <div></li>
+   <% end %>
+  </ul>
+<% end %>
+

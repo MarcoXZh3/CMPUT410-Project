@@ -1,0 +1,25 @@
+<% content_for :title do %>
+  Donations - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  Donations
+<% end %>
+
+<% content_for :content_block do %>
+ <ul>
+  <% @donations.each do |donation| %>
+   <li><div>
+     <%= link_to donation, action: 'act_donation', donation_id: donation %>
+     <% if donation.donation_date == nil %>
+       (Hanging request)
+     <% elsif donation.accepted == false %>
+       (Not accepted)
+     <% end %>
+   <div></li>
+  <% end %>
+ </ul>
+<% end %>
+

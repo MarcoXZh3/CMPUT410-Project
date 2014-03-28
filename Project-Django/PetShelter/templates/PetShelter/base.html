@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title> {% block title %} Welcome to the "PetShelter" {% endblock %} </title>
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'PetShelter/css/style.css' %}" />
+  {% block javascript %}{% endblock %}
+</head>
+<body>
+  <div id="logo">
+    Pet Shelter
+  </div>
+  <div id="login-banner" style="display:none;">
+    "Log in through here"
+  </div>
+  <div id="container">
+    <ul id="menu">
+      <li class="mi li-level1"><a href="{% url 'animals' %}"> Animals </a><ul>
+        {% for s in species %}
+          <li class="mi li-level2"><a href="{% url 'animals_species' s %}"> {{ s|capfirst }} </a></li>
+        {% endfor %}
+      </ul></li>
+      <li class="mi li-level1"> Activities <ul>
+        <li class="mi li-level2"><a href="{% url 'act_receipts' %}"> Receipts </a></li>
+        <li class="mi li-level2"><a href="{% url 'act_adoptions' %}"> Aoptions </a></li>
+        <li class="mi li-level2"><a href="{% url 'act_surrenders' %}"> Surrenders </a></li>
+        <li class="mi li-level2"><a href="{% url 'act_donations' %}"> Donations </a></li>
+        <li class="mi li-level2"><a href="{% url 'act_volunteers' %}"> Volunteers </a></li>
+      </ul></li>
+      <li class="mi li-level1"> Applications <ul>
+        <li class="mi li-level2"><a href="{% url 'app_adopt' %}"> Adopt animals </a></li>
+        <li class="mi li-level2"><a href="{% url 'app_surrender' %}"> Surrender animals </a></li>
+        <li class="mi li-level2"><a href="{% url 'app_donates' %}"> Donate </a><ul>
+          <li class="mi li-level3"><a href="{% url 'app_donate' 'money' %}"> Money </a></li>
+          <li class="mi li-level3"><a href="{% url 'app_donate' 'vetcare' %}"> Vet cares </a></li>
+          <li class="mi li-level3"><a href="{% url 'app_donate' 'items' %}"> Items </a></li>
+        </ul></li>
+        <li class="mi li-level2"><a href="{% url 'app_volunteer' %}"> Volunteer </a></li>
+      </ul></li>
+      <li class="mi li-level1"><a href="{% url 'shelters' %}"> Shelters </a></li>
+      <li class="mi li-level1"><a href="{% url 'staffs' %}"> Staffs </a></li>
+       {% if authenticated == None %}
+        <li class="mi li-level1"><a href="{% url 'login' %}"> Staff login </a></li>
+       {% else %}
+        <li class="mi li-level1"><a href="{% url 'users' %}"> Users </a></li>
+        <li class="mi li-level1"><a href="{% url 'management' %}"> Management </a></li>
+        <li class="mi li-level1">
+          <a href="{% url 'staff' authenticated %}">{{ authenticated }}</a>
+          <span class="more"><a href="{% url 'logout' %}"> logout </a></span>
+        </li>
+       {% endif %}
+    </ul>
+    <div>
+      <div class="subset" id="nav-bar">{% block navbar %}{% endblock %}</div>
+      <div class="subset">{% block body %}{% endblock %}</div>
+    </div>
+  </div>
+</body>
+</html>
+

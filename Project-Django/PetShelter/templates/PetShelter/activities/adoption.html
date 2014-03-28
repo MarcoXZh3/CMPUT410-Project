@@ -1,0 +1,36 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Adoption(id: "{{ adoption.id }}") - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  <a href="{%url 'act_adoptions'%}">Adoptions</a>&nbsp;&gt;
+  Adoption(id: "{{ adoption.id }}")
+{% endblock %}
+
+{% block body %}
+ <table>
+  {% for f, v in adoption.get_fields %}
+   {% if f.name != 'id' %}
+   <tr>
+     <td class="key"> {{ f.name }} </td>
+     <td class="value">
+      {% if f.name == 'adopter' %}
+       {% if authenticated != None %}
+        <a href="{% url 'user' v|first %}"> {{ v|last }} </a>
+       {% else %}
+        {{ v|last }}
+       {% endif %}
+      {% elif f.name == 'animal' %}
+       <a href="{% url 'animal_species' v.0 v.1 %}"> {{ v|last }} </a>
+      {% else %}
+       {{ v }}
+      {% endif %}
+     </td>
+   </tr>
+   {% endif %}
+  {% endfor %}
+ </table>
+{% endblock %}
+

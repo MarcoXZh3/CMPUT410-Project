@@ -1,0 +1,52 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Welcome to the "PetShelter" {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  Management
+{% endblock %}
+
+{% block body %}
+  <div id="receive" class="event-wrapper">
+    <a href="{% url 'man_receive' %}">Receive animals</a>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="requests" class="event-wrapper">
+    <a href="{% url 'man_requests' %}">Requests</a>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="shelters" class="event-wrapper">
+    <a href="{% url 'man_shelters' %}">Shelters</a>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="staffs" class="event-wrapper">
+    <a href="{% url 'man_staffs' %}">Staffs</a>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="reset" class="event-wrapper">
+    <a href="javascript:resetpwd();">Reset password</a>
+    <form id="resetpwd-form" method='POST' action="{% url 'management' %}">
+     {% csrf_token %}
+      <table>
+        <tr>
+          <td class="key"><label for="old">Old</label></td>
+          <td class="value"><input id="old" type="password" name="old" /></td>
+        </tr>
+        <tr>
+          <td class="key"><label for="new1">New</label></td>
+          <td class="value"><input id="new1" type="password" /></td>
+        </tr>
+        <tr>
+          <td class="key"><label for="new2">Confirm</label></td>
+          <td class="value"><input id="new2" type="password" name="new" /></td>
+        </tr>
+      </table>
+      <input class="submit" type="submit" name="cancle" value="Cancel" />
+      <input class="submit" type="submit" name="submit" value="Submit" />
+    </form>
+    <ul class="event-list"></ul>
+  </div>
+{% endblock %}
+

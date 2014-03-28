@@ -1,0 +1,31 @@
+<% content_for :title do %>
+  Manage volunteer requests - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Volunteer requests
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_req_volunteers'}, {:multipart => true}) do %>
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="volunteers" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+    <% @volunteers.each do |v| %>
+     <li>
+       <input id="<%= v.id %>" type="checkbox" name="<%= v %>" />
+       <label for="<%= v.id %>"><%= link_to v, action: 'man_req_volunteer', volunteer_id: v %></label>
+     </li>
+    <% end %>
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="reject" value="Reject" />
+   <input class="button" type="submit" name="accept" value="Accept" />
+ <% end %>
+<% end %>
+

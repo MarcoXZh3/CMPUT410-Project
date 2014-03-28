@@ -1,0 +1,36 @@
+<% content_for :title do %>
+  Adoption(id: "<%= @adoption.id %>") - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  <%= link_to 'Adoptions', action: 'act_adoptions' %>
+  &gt; <%= @adoption.id %>
+<% end %>
+
+<% content_for :content_block do %>
+ <table>
+  <% @adoption.attributes.each_pair do |name, value| %>
+   <% if name != 'id' and name != 'created_at' and name != 'updated_at' %>
+   <tr>
+     <td class="key"> <%= name %> </td>
+     <td class="value">
+      <% if name == 'people_id' %>
+       <% if user_signed_in? %>
+        <%= link_to @adopter, action: 'user', user_id: @adopter %>
+       <% else %>
+        <%= @adopter %>
+       <% end %>
+      <% elsif name == 'animal_id' %>
+      <%= link_to @animal, action: 'animal', species: @animal.species, animal_id: @animal.animal_id %>
+      <% else %>
+       <%= value %>
+      <% end %>
+     </td>
+   </tr>
+   <% end %>
+  <% end %>
+ </table>
+<% end %>
+

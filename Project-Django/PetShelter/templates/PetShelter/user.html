@@ -1,0 +1,56 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %}
+ {% if staff != None and staff.accepted == True %}
+  Staff "{{ staff.staff.user_id }}" - PetShelter
+ {% else %}
+  User "{{ user.user_id }} - PetShelter"
+ {% endif %}
+{% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  {% if staff != None and staff.accepted == True %}
+   <a href="{%url 'staffs'%}">Staffs</a>&nbsp;&gt;
+  {% else %}
+   <a href="{%url 'users'%}">Users</a>&nbsp;&gt;
+  {% endif %}
+  {{ user.user_id }}
+{% endblock %}
+
+{% block body %}
+ {% if staff != None %}
+  <table>
+   {% for f, v in staff.get_fields %}
+    <tr>
+      <td class="key"> {{ f.name }} </td>
+      <td class="value">
+       {% if f.name == 'shelter' %}
+        <a href="{% url 'shelter' v|first %}"> {{ v|last }}</a>
+       {% else %}
+        {{ v }}
+       {% endif %}
+      </td>
+    </tr>
+   {% endfor %}
+  </table>
+ {% endif %}
+  <table>
+   {% for f, v in user.get_fields %}
+    {% if f.name != 'user_id' and f.name != 'user_type' %}
+     <tr>
+       <td class="key"> {{ f.name }} </td>
+       <td class="value">
+        {% if f.name == 'email' %}
+         <a href="mailto:{{ v }}"> {{ v }}</a>
+        {% else %}
+         {{ v }}
+        {% endif %}
+       </td>
+     </tr>
+    {% endif %}
+   {% endfor %}
+  </table>
+{% endblock %}
+

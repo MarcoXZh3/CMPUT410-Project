@@ -1,0 +1,55 @@
+<% content_for :title do %>
+  Animal "<%= @animal %>" - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Animals', action: 'animals', species: nil %>
+  (<%= link_to @species, action: 'animals', species: @species %>)
+  &gt; <%= @animal %>
+<% end %>
+
+<% content_for :content_block do %>
+ <div class="files">
+  <% @files.each do |file| %>
+    <% if file.file_type == 'VIDEO' %>
+     <%= link_to image_tag('video.png', class: 'media'), action: 'animal_file',
+                           species: @animal.species, animal_id: @animal.animal_id, file_id: file.id %>
+    <% elsif file.file_type == 'AUDIO' %>
+     <%= link_to image_tag('audio.png', class: 'media'), action: 'animal_file',
+                           species: @animal.species, animal_id: @animal.animal_id, file_id: file.id %>
+    <% else %>
+     <%= link_to image_tag(file.path, class: 'media'), action: 'animal_file',
+                           species: @animal.species, animal_id: @animal.animal_id, file_id: file.id %>
+    <% end %>
+  <% end %>
+ </div>
+ <table>
+  <% @animal.attributes.each_pair do |name, value| %>
+   <% if name != 'id' and name != 'created_at' and name != 'updated_at' %>
+    <tr>
+     <% if name == 'shelter_id'%>
+      <td class="key">shelter</td>
+      <td class="value">
+       <% if value == nil %>
+        N/A
+       <% else %>
+         <%= link_to @animal.shelter.name, action: 'shelter', shelter_id: @animal.shelter.id %>
+       <% end %>
+      </td>
+     <% else %>
+      <td class="key"><%= name %></td>
+      <td class="value">
+       <% if value == nil %>
+        N/A
+       <% else %>
+        <%= value %>
+       <% end %>
+      </td>
+     <% end %>
+    </tr>
+   <% end %>
+  <% end %>
+ </table>
+<% end %>

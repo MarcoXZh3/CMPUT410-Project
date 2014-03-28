@@ -1,0 +1,25 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Donations - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Donations
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for d in donations %}
+   <li><div>
+     <a href="{% url 'act_donation' d.id %}">{{ d }}</a>
+     {% if d.accepted_date == None %}
+       (Hanging request)
+     {% elif d.accepted == False %}
+       (Not accepted)
+     {% endif %}
+   <div></li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 
+  people_id: 
+  staff_type: MyString
+  shelter_id: 
+  start_date: 2014-03-26
+  accepted: false
+
+two:
+  user_id: 
+  people_id: 
+  staff_type: MyString
+  shelter_id: 
+  start_date: 2014-03-26
+  accepted: false

@@ -1,0 +1,65 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %}
+  Staff "{{ staff.staff.user_id }}" - PetShelter
+{% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  <a href="{%url 'man_staffs'%}">Staffs</a>&nbsp;&gt;
+  {{ user.user_id }}
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'man_staff' staff.staff_id %}">
+  <table>
+   {% for f, v in staff.get_fields %}
+    {%if f.name != 'staff' and f.name != 'accepted' %}
+    <tr>
+      <td class="key"> {{ f.name }} </td>
+      <td class="value">
+       {% if f.name == 'staff_type' %}
+        <select name="staff_type">
+          <option value="member" selected="selected">Member</option>
+          <option value="volunteeer" ">Volunteer</option>
+        </select>
+       {% elif f.name == 'shelter' %}
+        <select name="staff_type">
+         {% for shelter in shelters %}
+          <option value="{{shelter.shelter_id}}" selected="selected">{{shelter}}</option>
+         {% endfor %}
+        </select>
+       {% else %}
+        <input type="text" name="{{ f.name }}" />
+       {% endif %}
+      </td>
+    </tr>
+    {% endif %}
+   {% endfor %}
+  </table>
+   <table class="files">
+    {% for f, v in user.get_fields %}
+     {% if f.name != 'user_type' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+   </table>
+   <input class="submit" type="reset" value="Reset" />
+   <input class="submit" type="submit" name="submit" value="Submit" />
+ </form>
+{% endblock %}
+

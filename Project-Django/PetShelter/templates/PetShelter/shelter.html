@@ -1,0 +1,46 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Shelters "{{ shelter.name }}" - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  <a href="{%url 'shelters'%}">Shelters</a>&nbsp;&gt;
+  {{ shelter.name }}
+{% endblock %}
+
+{% block body %}
+  <table>
+   {% for f, v in shelter.get_fields %}
+    {% if f.name != 'shelter_id' %}
+     <tr>
+      <td class="key"> {{ f.name }} </td>
+      <td class="value">
+       {% if f.name == 'email' %}
+        <a href="mailto:{{ v }}"> {{ v }}</a>
+       {% else %}
+        {{ v|linebreaksbr }}
+       {% endif %}
+      </td>
+    </tr>
+    {% endif %}
+   {% endfor %}
+   <tr>
+     <td class="key"> Members </td>
+     <td class="value">
+      {% for m in members %}
+        <li><a href="{% url 'staff' m.staff_id %}"> {{ m }}</a></li>
+      {% endfor %}
+     </td>
+   </tr>
+   <tr>
+     <td class="key"> Volunteers </td>
+     <td class="value">
+      {% for v in volunteers %}
+        <li><a href="{% url 'staff' v.staff_id %}"> {{ v }}</a></li>
+      {% endfor %}
+     </td>
+   </tr>
+  </table>
+{% endblock %}
+

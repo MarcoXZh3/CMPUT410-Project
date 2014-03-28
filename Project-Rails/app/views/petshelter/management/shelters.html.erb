@@ -1,0 +1,31 @@
+<% content_for :title do %>
+  Manage shelters - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Shelters
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_shelters'}, {:multipart => true}) do %>
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="shelters" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+    <% @shelters.each do |shelter| %>
+     <li><div>
+       <input id="<%= shelter %>" type="checkbox" name="shelters" />
+       <label for="<%= shelter %>"><%= link_to shelter, action: 'man_shelter', shelter_id: shelter %></label>
+     <div></li>
+    <% end %>
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="remove" value="Remove" />
+   <input class="button" type="submit" name="Add" value="Add..." />
+ <% end %>
+<% end %>
+

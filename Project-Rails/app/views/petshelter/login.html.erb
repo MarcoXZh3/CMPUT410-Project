@@ -1,0 +1,27 @@
+<% content_for :title do %>
+  Staff login - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Applications&nbsp;&gt;
+  Staff login
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag(new_user_session_path, {:method => :post}) do %>
+   <table class="files">
+     <tr>
+       <td class="key"><label for="name"> Staff id </label></td>
+       <td class="value"><input id="name" type="text" name="user[email]" /></td>
+     </tr>
+     <tr>
+       <td class="key"><label for="password"> Password </label></td>
+       <td class="value"><input id="password" type="password" name="user[password]" /></td>
+     </tr>
+   </table>
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" id="send" value="Submit" />
+ <% end %>
+<% end %>
+

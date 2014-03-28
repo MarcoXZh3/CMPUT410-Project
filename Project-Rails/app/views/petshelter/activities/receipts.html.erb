@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  Receipts - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  Receipts
+<% end %>
+
+<% content_for :content_block do %>
+ <ul>
+  <% @receipts.each do |receipt| %>
+   <li><div>
+     <%= link_to receipt, action: 'act_receipt', receipt_id: receipt %>
+   <div></li>
+  <% end %>
+ </ul>
+<% end %>
+

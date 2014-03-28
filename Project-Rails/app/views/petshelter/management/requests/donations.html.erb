@@ -1,0 +1,33 @@
+<% content_for :title do %>
+  Manage donation requests - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Donation requests
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_req_donations'}, {:multipart => true}) do %>
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="donations" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+    <% @donations.each do |donation| %>
+     <li>
+       <input id="<%= donation.id %>" type="checkbox" name="<%= donation %>" />
+       <label for="<%= donation.id %>">
+        <%= link_to donation, action: 'man_req_donation', donation_id: donation %>
+       </label>
+     </li>
+    <% end %>
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="reject" value="Reject" />
+   <input class="button" type="submit" name="accept" value="Accept" />
+ <% end %>
+<% end %>
+

@@ -1,0 +1,29 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Staff login - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{%url 'login' %}">Staff login</a>
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'login' %}">
+  {% csrf_token %}
+   <table class="files">
+     <tr>
+       <td class="key"><label for="name"> Staff id </label></td>
+       <td class="value"><input id="name" type="text" name="name" /></td>
+     </tr>
+     <tr>
+       <td class="key"><label for="password"> Password </label></td>
+       <td class="value"><input id="password" type="password" name="password" /></td>
+     </tr>
+   </table>
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" value="Submit" />
+ </form>
+{% endblock %}
+

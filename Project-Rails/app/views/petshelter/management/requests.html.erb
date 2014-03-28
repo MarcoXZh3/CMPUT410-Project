@@ -1,0 +1,46 @@
+<% content_for :title do %>
+  Manage requests - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Requests
+<% end %>
+
+<% content_for :content_block do %>
+  <div id="adopt" class="event-wrapper"> Adoption requests
+    <span class="more"><%= link_to 'More', action: 'man_req_adoptions' %></span>
+    <ul class="event-list">
+     <% @adoptions.each do |adoption| %>
+      <li><%= link_to adoption, action: 'man_req_adoption', adoption_id: adoption %></li>
+     <% end %>
+    </ul>
+  </div>
+  <div id="surrender" class="event-wrapper"> Surrender requests
+    <span class="more"><%= link_to 'More', action: 'man_req_surrenders' %></span>
+    <ul class="event-list">
+     <% @surrenders.each do |surrender| %>
+      <li><%= link_to surrender, action: 'man_req_surrender', surrender_id: surrender %></li>
+     <% end %>
+    </ul>
+  </div>
+  <div id="donate" class="event-wrapper"> Donation requests
+    <span class="more"><%= link_to 'More', action: 'man_req_donations' %></span>
+    <ul class="event-list">
+     <% @donations.each do |donation| %>
+      <li><%= link_to donation, action: 'man_req_donation', donation_id: donation %></li>
+     <% end %>
+    </ul>
+  </div>
+  <div id="volunteer" class="event-wrapper"> Volunteer requests
+    <span class="more"><%= link_to 'More', action: 'man_req_volunteers' %></span>
+    <ul class="event-list">
+     <% @volunteers.each do |volunteer| %>
+      <li><%= link_to volunteer, action: 'man_req_volunteer', volunteer_id: volunteer %></li>
+     <% end %>
+    </ul>
+  </div>
+<% end %>
+

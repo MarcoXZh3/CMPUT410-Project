@@ -1,0 +1,47 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Animal "{{ animal }}" - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'animals' %}">Animals</a>
+  (<a href="{% url 'animals_species' s %}">{{ s }}</a>)
+  &gt; {{ animal.name }}
+{% endblock %}
+
+{% block body %}
+ <div class="files">
+  {% for file in files %}
+   <a href="{% url 'animal_file_species' animal.species animal.animal_id file.id %}">
+    {% if file.file_type == 'VIDEO' %}
+     <img class="media" src="{% static 'PetShelter/video.png' %}" alt="./{{ file.path }}" />
+    {% elif file.file_type == 'AUDIO' %}
+     <img class="media" src="{% static 'PetShelter/audio.png' %}" alt="./{{ file.path }}" />
+    {% else %}
+     <img class="media" src="{% static file.path %}" alt="./{{ file.path }}" />
+    {% endif %}
+   </a>
+  {% endfor %}
+ </div>
+ <table>
+  {% for f, v in animal.get_fields %}
+   <tr>
+     <td class="key"> {{ f.name }} </td>
+     <td class="value">
+      {% if f.name == 'shelter' %}
+       {% if v|length != 0%}
+        <a href="{% url 'shelter' v|first %}"> {{ v|last }} </a>
+       {% else %}
+        N/A
+       {% endif %}
+      {% else %}
+       {{ v }} <br/>
+      {% endif %}
+     </td>
+   </tr>
+  {% endfor %}
+ </table>
+{% endblock %}
+

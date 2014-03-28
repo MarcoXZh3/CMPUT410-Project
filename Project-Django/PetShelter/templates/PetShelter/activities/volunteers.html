@@ -1,0 +1,25 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Volunteers - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Volunteers
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for v in volunteers %}
+   <li><div>
+     <a href="{% url 'staff' v.staff_id %}">{{ v }}</a>
+     {% if v.start_date == None %}
+       (Hanging request)
+     {% elif v.accepted == False %}
+       (Not accepted)
+     {% endif %}
+   <div></li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

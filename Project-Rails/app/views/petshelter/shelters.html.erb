@@ -1,0 +1,20 @@
+<% content_for :title do %>
+  All shelters - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  Shelters
+<% end %>
+
+<% content_for :content_block do %>
+  <ul>
+  <% @shelters.each do |shelter| %>
+    <li><div>
+      <%= link_to shelter, action: 'shelter', shelter_id: shelter %>
+    <div></li>
+   <% end %>
+  </ul>
+<% end %>
+

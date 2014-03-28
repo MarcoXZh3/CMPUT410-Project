@@ -1,0 +1,57 @@
+<% content_for :title do %>
+ <% if @staff != nil %>
+  Staff "<%= @user %>" - PetShelter
+ <% else %>
+  User "<%= @user %>" - PetShelter"
+ <% end %>
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <% if @staff != nil %>
+    <%= link_to 'Staffs', action: 'staffs' %>&nbsp;&gt;
+  <% else %>
+    <%= link_to 'Users', action: 'users' %>&nbsp;&gt;
+  <% end %>
+  <%= @user %>
+<% end %>
+
+<% content_for :content_block do %>
+  <table>
+   <% @user.attributes.each_pair do |name, value| %>
+    <% if name != 'id' and name != 'user_type' and
+          name != 'created_at' and name != 'updated_at' %>
+     <tr>
+       <td class="key"> <%= name %> </td>
+       <td class="value">
+        <% if name == 'e_mail' %>
+         <%= mail_to value %>
+        <% else %>
+         <%= value %>
+        <% end %>
+       </td>
+     </tr>
+    <% end %>
+   <% end %>
+  </table>
+ <% if @staff != nil %>
+  <table>
+   <% @staff.attributes.each_pair do |name, value| %>
+    <% if name != 'id' and name != 'people_id' and name != 'created_at' and name != 'updated_at' %>
+     <tr>
+      <td class="key"> <%= name %> </td>
+      <td class="value">
+       <% if name == 'shelter_id' %>
+        <%= link_to @shelter.name, action: 'shelter', shelter_id: @shelter %>
+       <% else %>
+        <%= value %>
+       <% end %>
+      </td>
+     </tr>
+    <% end %>
+   <% end %>
+  </table>
+ <% end %>
+<% end %>
+

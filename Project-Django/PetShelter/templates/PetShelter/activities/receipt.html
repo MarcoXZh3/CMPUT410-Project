@@ -1,0 +1,32 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Receipt(id: "{{ receipt.id }}") - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  <a href="{%url 'act_receipts'%}">Recepts</a>&nbsp;&gt;
+  Recept(id: "{{ receipt.id }}")
+{% endblock %}
+
+{% block body %}
+ <table>
+  {% for f, v in receipt.get_fields %}
+   {% if f.name != 'id' %}
+   <tr>
+     <td class="key"> {{ f.name }} </td>
+     <td class="value">
+      {% if f.name == 'receiver' %}
+       <a href="{% url 'staff' v|first %}"> {{ v|last }} </a>
+      {% elif f.name == 'animal' %}
+       <a href="{% url 'animal_species' v.0 v.1 %}"> {{ v|last }} </a>
+      {% else %}
+       {{ v }}
+      {% endif %}
+     </td>
+   </tr>
+   {% endif %}
+  {% endfor %}
+ </table>
+{% endblock %}
+

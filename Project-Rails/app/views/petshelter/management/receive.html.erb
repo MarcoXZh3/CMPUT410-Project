@@ -1,0 +1,55 @@
+<% content_for :title do %>
+  Receive animals - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Receive animals
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_receive'}, {:multipart => true}) do %>
+   <select id="sas" class="files" name="sas"></select>
+   <table class="files">
+    <% @animal.attributes.each_pair do |name, value| %>
+     <% if name != 'id' and name != 'stage' and name != 'price' and
+           name != 'shelter_id' and name != 'created_at' and name != 'updated_at' %>
+      <tr>
+        <td class="key"><%= name %></td>
+        <td class="value">
+         <% if name == 'gender' %>
+          <input type="radio" name="a_gender" value="male" checked="checked" id="a_male" />
+          <label for="a_male"> Male </label>
+          <input type="radio" name="a_gender" value="female" id="a_female" />
+          <label for="a_female"> Female </label>
+         <% elsif name == 'sn' %>
+          <input type="checkbox" name="sn" id="sn" />
+         <% else %>
+          <input type="text" name="<%= name %>" />
+         <% end %>
+        </td>
+      </tr>
+     <% end %>
+    <% end %>
+      <tr>
+        <td class="key"> photos </td>
+        <td class="value">
+        </td>
+      </tr>
+      <tr>
+        <td class="key"> reason </td>
+        <td class="value">
+          <input type="text" name="reason" />
+        </td>
+      </tr>
+   </table>
+   <input id="add" class="button" type="button" name="add" value="Add" />
+   <input id="remove" class="button" type="button" name="remove" value="Remove" />
+   <input id="edit" class="button" type="button" name="edit" value="Edit" />
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" value="Submit" />
+ <% end %>
+<% end %>
+

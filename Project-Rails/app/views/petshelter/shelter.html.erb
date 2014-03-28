@@ -1,0 +1,48 @@
+<% content_for :title do %>
+  Shelters "<%= @shelter.name %>" - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Shelters', action: 'shelters' %>&nbsp;&gt;
+  <%= @shelter.name %>
+<% end %>
+
+<% content_for :content_block do %>
+  <table>
+   <% @shelter.attributes.each_pair do |name, value| %>
+    <% if name != 'id' and name != 'shelter_id' and 
+          name != 'created_at' and name != 'updated_at' %>
+     <tr>
+      <td class="key"> <%= name %> </td>
+      <td class="value">
+       <% if name == 'e_mail' %>
+        <%= mail_to value %>
+       <% else %>
+        <%= value.gsub("\n", "<br />").html_safe %>
+       <% end %>
+      </td>
+     </tr>
+    <% end %>
+   <% end %>
+   <tr>
+    <td class="key">Members</td>
+    <td class="value">
+     <% @shetler_staffs.each do |staff| %>
+      <%= link_to staff, action: 'staff', staff_id: staff %><br />
+     <% end %>
+    </td>
+   </tr>
+   <tr>
+    <td class="key">Volunteers</td>
+    <td class="value">
+     <% @volunteers.each do |volunteer| %>
+      <%= link_to volunteer, action: 'staff', staff_id: volunteer %><br />
+     <% end %>
+    </td>
+   </tr>
+
+  </table>
+<% end %>
+

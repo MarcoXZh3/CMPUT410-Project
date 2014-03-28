@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  apply_date: 2014-03-26
+  people_id: 
+  animal_id: 
+  surrender_date: 2014-03-26
+  accepted: false
+  reason: MyText
+
+two:
+  apply_date: 2014-03-26
+  people_id: 
+  animal_id: 
+  surrender_date: 2014-03-26
+  accepted: false
+  reason: MyText

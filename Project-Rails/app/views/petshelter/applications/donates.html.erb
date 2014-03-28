@@ -1,0 +1,77 @@
+<% content_for :title do %>
+  Donates animals - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Applications&nbsp;&gt;
+  Donates
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'app_donates'}, {:method => :post}) do %>
+   <table class="files">
+      <tr>
+        <td class="key">type</td>
+        <td class="value">
+          <select name="d_type">
+            <option value="money">Money</option>
+            <option value="vetcare">Vetcare</option>
+            <option value="items">Items</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td class="key">content</td>
+        <td class="value">
+          <input type="text" name="d_content" />
+        </td>
+      </tr>
+      <tr>
+        <td class="key">to animal(s)</td>
+        <td class="value">
+          <input type="checkbox" name="d_ta" />
+        </td>
+      </tr>
+   </table>
+   <ul id="a_list" class="files">
+    <% @animals.each do |animal| %>
+     <li>
+      <% @files.each do |f| %><% if f.animal == animal %>
+       <%= link_to image_tag(f.path, class: 'media'),
+                   action: 'animal', species: animal.species, animal_id: animal.animal_id %>
+      <% end %><% end %>
+     <%= check_box_tag animal.animal_id, animal.animal_id %>
+     <%= link_to animal, action: 'animal', species: animal.species, animal_id: animal.animal_id %>
+     </li>
+    <% end %>
+   </ul>
+   <select id="ds" class="files" name="ds"></select>
+   <input id="add" class="button" type="button" name="add" value="Add" />
+   <input id="remove" class="button" type="button" name="remove" value="Remove" />
+   <input id="edit" class="button" type="button" name="edit" value="Edit" />
+   <table class="files">
+   <% @people.attributes.each_pair do |name, value| %>
+    <% if name != 'id' and name != 'user_type' and 
+          name != 'created_at' and name != 'updated_at' %>
+      <tr>
+        <td class="key"><%= name %></td>
+        <td class="value">
+         <% if name == 'gender' %>
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         <% else %>
+          <input type="text" name="<%= name %>" id="<%= name %>" />
+         <% end %>
+        </td>
+      </tr>
+     <% end %>
+    <% end %>
+   </table>
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" value="Submit" />
+ <% end %>
+<% end %>
+

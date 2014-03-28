@@ -1,0 +1,33 @@
+<% content_for :title do %>
+ <% if @species != nil %>
+   Animals in species "<%= @species %>" - PetShelter
+ <% else %>
+   All animals - PetShelter
+ <% end %>
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <% if @species == nil %>
+   Animals
+  <% else %>
+   <%= link_to 'Animals', action: 'animals', species: nil %>&nbsp;&gt;&nbsp;<%= @species %>
+  <% end %>
+<% end %>
+
+<% content_for :content_block do %>
+ <ul>
+  <% @animals.each do |animal| %>
+   <li>
+    <% @files.each do |f| %>
+     <% if f.animal == animal %>
+      <%= link_to image_tag(f.path, class: 'media'),
+                  action: 'animal', species: animal.species, animal_id: animal.animal_id %>
+     <% end %>
+    <% end %>
+    <%= link_to animal, action: 'animal', species: animal.species, animal_id: animal.animal_id %>
+   </li>
+  <% end %>
+ </ul>
+<% end %>

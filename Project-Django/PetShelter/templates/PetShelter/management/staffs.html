@@ -1,0 +1,46 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Staffs - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  Staffs
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'man_staffs' %}">
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="all" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+     <li><strong>Members</strong></li>
+     {% for m in members %}
+      <li>
+        <input id="{{ m.staff_id }}" type="checkbox" name="{{ m.staff_id }}" />
+        <label for="{{ m.staff_id }}"><a href="{% url 'man_staff' m.staff_id %}">{{ m.staff }}</a></label>
+      </li>
+     {% endfor %}
+     <li>
+     <li><strong>Volunteers</strong></li>
+     {% for v in volunteers %}
+      <li>
+        <input id="{{ v.staff_id }}" type="checkbox" name="{{ v.staff_id }}" />
+        <label for="{{ v.staff_id }}">
+        {% if v.accepted == False %}
+          <a href="{% url 'man_staff' v.staff_id %}">{{ v.staff }}</a> (Not accepted)
+         {% else %}
+          <a href="{% url 'man_staff' v.staff_id %}">{{ v.staff }}</a>
+         {% endif %}
+        </label>
+      </li>
+    {% endfor %}
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="remove" value="Remove" />
+   <input class="button" type="submit" name="Add" value="Add..." />
+ </form>
+{% endblock %}
+

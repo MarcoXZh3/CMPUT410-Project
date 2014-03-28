@@ -1,0 +1,48 @@
+<% content_for :title do %>
+Management - "PetShelter"
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location: Home&nbsp;&gt;&nbsp;Management
+<% end %>
+
+<% content_for :content_block do %>
+  <div id="receive" class="event-wrapper">
+    <%= link_to 'Receive animals', action: "man_receive" %>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="requests" class="event-wrapper">
+    <%= link_to 'Requests', action: "man_requests" %>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="shelters" class="event-wrapper">
+    <%= link_to 'Shelters', action: "man_shelters" %>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="staffs" class="event-wrapper">
+    <%= link_to 'Staffs', action: "man_staffs" %>
+    <ul class="event-list"></ul>
+  </div>
+  <div id="reset" class="event-wrapper">
+    <a href="javascript:resetpwd();">Reset password</a>
+    <%= form_tag(user_registration_path, {:method => :post, :id => "resetpwd-form"}) do %>
+      <table>
+        <tr>
+          <td class="key"><label for="old">Old</label></td>
+          <td class="value"><input id="old" type="password" name="user[current_password]" /></td>
+        </tr>
+        <tr>
+          <td class="key"><label for="new1">New</label></td>
+          <td class="value"><input id="new1" type="password" name="user[password]" /></td>
+        </tr>
+        <tr>
+          <td class="key"><label for="new2">Confirm</label></td>
+          <td class="value"><input id="new2" type="password" name="user[password_confirmation]" /></td>
+        </tr>
+      </table>
+      <input class="submit" type="submit" name="cancle" value="Cancel" />
+      <input class="submit" type="submit" name="submit" value="Submit" />
+    <% end %>
+  </div>
+<% end %>
+

@@ -1,0 +1,82 @@
+<% content_for :title do %>
+  Manage "<%= @staff %>" - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  <%= link_to 'Staffs', action: 'man_staffs' %>&nbsp;&gt;
+  <%= @staff %>
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_staff', staff_id: @staff}, {:multipart => true}) do %>
+  <table>
+   <% @staff.attributes.each_pair do |name, value| %>
+    <% if name != 'user_id' and name != 'id' and name != 'people_id' and
+          name != 'created_at' and name != 'updated_at' %>
+    <tr>
+      <td class="key"><%= name %></td>
+      <td class="value">
+       <% if name == 'staff_type' %>
+        <select name="staff_type">
+          <option value="member" selected="selected">Member</option>
+          <option value="volunteeer" ">Volunteer</option>
+        </select>
+       <% elsif name == 'shelter_id' %>
+        <select name="staff_type">
+         <% @shelters.each do |shelter| %>
+          <% if value == shelter.id %>
+            <option value="<%= shelter.id %>" selected="selected"><%= shelter %></option>
+          <% else %>
+            <option value="<%= shelter.id %>"><%= shelter %></option>
+          <% end%>
+         <% end %>
+        </select>
+       <% elsif name == 'accepted' %>
+        <%if value == true %>
+         <input type="checkbox" name="<%= name %>" id="<%= name %>" checked="checked" />
+        <% else %>
+         <input type="checkbox" name="<%= name %>" id="<%= name %>" />
+        <% end %>
+       <% else %>
+        <input type="text" name="<%= name %>" value="<%= value %>" />
+       <% end %>
+      </td>
+    </tr>
+    <% end %>
+   <% end %>
+  </table>
+   <table class="files">
+    <% @people.attributes.each_pair do |name, value| %>
+     <% if name != 'id' and name != 'user_type' and name != 'created_at' and name != 'updated_at' %>
+      <tr>
+        <td class="key"><%= name %></td>
+        <td class="value">
+         <% if name == 'gender' %>
+          <% if value == 'MALE' %>
+           <input type="radio" name="gender" value="male" checked="checked" id="male" readonly="readonly" />
+           <label for="male"> Male </label>
+           <input type="radio" name="gender" value="female" id="female" readonly="readonly" />
+           <label for="female"> Female </label>
+          <% else %>
+           <input type="radio" name="gender" value="male" id="male" readonly="readonly" />
+           <label for="male"> Male </label>
+           <input type="radio" name="gender" value="female" checked="checked" id="female" readonly="readonly" />
+           <label for="female"> Female </label>
+          <% end %>
+         <% else %>
+          <input type="text" name="<%= name %>" value="<%= value %>" readonly="readonly" />
+         <% end %>
+        </td>
+      </tr>
+     <% end %>
+    <% end %>
+   </table>
+   <input class="submit" type="reset" value="Reset" />
+   <input class="submit" type="submit" name="submit" value="Submit" />
+ <% end %>
+<% end %>
+

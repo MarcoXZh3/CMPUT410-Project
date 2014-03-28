@@ -1,0 +1,25 @@
+<% content_for :title do %>
+  Surrenders - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  Surrenders
+<% end %>
+
+<% content_for :content_block do %>
+ <ul>
+  <% @surrenders.each do |surrender| %>
+   <li><div>
+     <%= link_to surrender, action: 'act_surrender', surrender_id: surrender %>
+     <% if surrender.surrender_date == nil %>
+       (Hanging request)
+     <% elsif surrender.accepted == false %>
+       (Not accepted)
+     <% end %>
+   <div></li>
+  <% end %>
+ </ul>
+<% end %>
+

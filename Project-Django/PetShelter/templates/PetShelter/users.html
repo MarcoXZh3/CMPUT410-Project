@@ -1,0 +1,23 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} All users - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Users
+{% endblock %}
+
+{% block body %}
+  <ul class="users">
+   {% for u in users %}
+    <li><div>
+      <a href="{% url 'user' u.user_id %}">{{ u }}</a>
+      {% if u.user_type != 'USER' %}
+       ({{ u.user_type }})
+      {% endif %}
+    <div></li>
+   {% endfor %}
+  </ul>
+{% endblock %}
+

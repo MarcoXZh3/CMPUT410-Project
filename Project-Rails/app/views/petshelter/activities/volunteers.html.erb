@@ -1,0 +1,25 @@
+<% content_for :title do %>
+  Adoptions - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  Volunteers
+<% end %>
+
+<% content_for :content_block do %>
+ <ul>
+  <% @volunteers.each do |volunteer| %>
+   <li><div>
+    <%= link_to volunteer, action: 'act_volunteer', volunteer_id: volunteer %>
+    <% if volunteer.start_date == nil %>
+      (Hanging request)
+    <% elsif volunteer.accepted == false %>
+      (Not accepted)
+    <% end %>
+   <div></li>
+  <% end %>
+ </ul>
+<% end %>
+

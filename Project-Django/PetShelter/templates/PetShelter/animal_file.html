@@ -1,0 +1,31 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Gallery of "{{ animal }}" - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'animals' %}">Animals</a>
+  (<a href="{% url 'animals_species' s %}">{{ s }}</a>) &gt;
+  <a href="{%url 'animal_species' s animal.animal_id%}">{{ animal.name }}</a>&nbsp;&gt;
+  Gallery
+{% endblock %}
+
+
+{% block body %}
+ <div class="files">
+  {% if file.file_type == 'VIDEO' %}
+   <video controls="controls">
+     <source src="{% static file.path %}" type="video/mp4" />
+     <source src="{% static file.path %}" type="video/ogg" />
+     <source src="{% static file.path %}" type="video/webm" />
+   </video>
+  {% elif file.file_type == 'AUDIO' %}
+   <audio controls="controls" src="{% static file.path %}" />
+  {% else %}
+   <img src="{% static file.path %}" alt="./{{ file.path }}" />
+  {% endif %}
+ </div>
+{% endblock %}
+

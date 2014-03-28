@@ -1,0 +1,47 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Requests - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  Requests
+{% endblock %}
+
+{% block body %}
+  <div id="adopt" class="event-wrapper"> Adoption requests
+    <span class="more"><a href="{% url 'man_req_adoptions' %}"> More </a></span>
+    <ul class="event-list">
+     {% for adoption in adoptions %}
+      <li><a href="{% url 'man_req_adoption' adoption.id %}"> {{ adoption }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="surrender" class="event-wrapper"> Surrender requests
+    <span class="more"><a href="{% url 'man_req_surrenders' %}"> More </a></span>
+    <ul class="event-list">
+     {% for surrender in surrenders %}
+      <li><a href="{% url 'man_req_surrender' surrender.id %}"> {{ surrender }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="donate" class="event-wrapper"> Donation requests
+    <span class="more"><a href="{% url 'man_req_donations' %}"> More </a></span>
+    <ul class="event-list">
+     {% for donation in donations %}
+      <li><a href="{% url 'man_req_donation' donation.id %}"> {{ donation }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="volunteer" class="event-wrapper"> Volunteer requests
+    <span class="more"><a href="{% url 'man_req_volunteers' %}"> More </a></span>
+    <ul class="event-list">
+     {% for volunteer in volunteers %}
+      <li><a href="{%url 'man_req_volunteer' volunteer.staff.user_id%}">{{volunteer}}</a></li>
+     {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+

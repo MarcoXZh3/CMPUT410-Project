@@ -1,0 +1,40 @@
+<% content_for :title do %>
+  Donation(id: "<%= @donation.id %>") - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;&nbsp;Activities&nbsp;&gt;
+  <%= link_to 'Donations', action: 'act_donations' %>
+  &gt; <%= @donation.id %>
+<% end %>
+
+<% content_for :content_block do %>
+ <table>
+  <% @donation.attributes.each_pair do |name, value| %>
+   <% if name != 'id' and name != 'created_at' and name != 'updated_at' %>
+   <tr>
+     <td class="key"> <%= name %> </td>
+     <td class="value">
+      <% if name == 'people_id' %>
+       <% if user_signed_in? %>
+        <%= link_to @donator, action: 'user', user_id: @donator %>
+       <% else %>
+        <%= @donator %>
+       <% end %>
+      <% elsif name == 'animal_id' %>
+       <% if @animal != nil %>
+        <%= link_to @animal, action: 'animal', species: @animal.species, animal_id: @animal.animal_id %>
+       <% else %>
+        N/A
+       <% end %>
+      <% else %>
+       <%= value %>
+      <% end %>
+     </td>
+   </tr>
+   <% end %>
+  <% end %>
+ </table>
+<% end %>
+

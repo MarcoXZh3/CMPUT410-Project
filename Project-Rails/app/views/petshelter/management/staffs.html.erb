@@ -1,0 +1,43 @@
+<% content_for :title do %>
+  Manage staffs - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Staffs
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_staffs'}, {:multipart => true}) do %>
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="all" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+     <li><strong>Members</strong></li>
+     <% @members.each do |member| %>
+      <li>
+        <input id="<%= member %>" type="checkbox" name="<%= member %>" />
+        <label for="<%= member %>"><%= link_to member, action: 'man_staff', staff_id: member %></label>
+      </li>
+     <% end %>
+     <li>
+     <li><strong>Volunteers</strong></li>
+     <% @volunteers.each do |volunteer| %>
+      <li>
+        <input id="<%= volunteer %>" type="checkbox" name="<%= volunteer %>" />
+        <label for="<%= volunteer %>">
+         <%= link_to volunteer, action: 'man_staff', staff_id: volunteer %>
+         <% if volunteer.accepted == false %>(Not accepted)<% end %>
+        </label>
+      </li>
+     <% end %>
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="remove" value="Remove" />
+   <input class="button" type="submit" name="Add" value="Add..." />
+ <% end %>
+<% end %>
+

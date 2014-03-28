@@ -1,0 +1,25 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Adoptions - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Adoptions
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for a in adoptions %}
+   <li><div>
+     <a href="{% url 'act_adoption' a.id %}">{{ a }}</a>
+     {% if a.adoption_date == None %}
+       (Hanging request)
+     {% elif a.accepted == False %}
+       (Not accepted)
+     {% endif %}
+   <div></li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

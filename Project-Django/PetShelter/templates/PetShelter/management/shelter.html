@@ -1,0 +1,82 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %}
+ {{ shelter }} - "PetShelter"
+{% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  <a href="{% url 'man_shelters' %}">Shelters</a>&nbsp;&gt;
+  {{ shelter }}
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'man_shelter' shelter.shelter_id %}">
+  <table>
+   {% for f, v in shelter.get_fields %}
+    {% if f.name != 'shelter_id' %}
+     <tr>
+      <td class="key"> {{ f.name }} </td>
+      <td class="value">
+       {% if f.name == 'shelter_type' %}
+        <select name="shelter_type" value="shelter">
+          <option value="shelter" selected="selected">Shelter</option>
+          <option value="vet">Vet</option>
+        </select>
+       {% else %}
+        <input type="text" name={{ f.name }} />
+       {% endif %}
+      </td>
+    </tr>
+    {% endif %}
+   {% endfor %}
+   <tr>
+     <td class="key"> Members </td>
+     <td class="value">
+        <select name="members" value="new_member">
+         {% for u in users %}
+          <option value="{{ u.user_id }}"> {{ u }}</option>
+         {% endfor %}
+          <option value="new_member" selected="selected">Add new member</option>
+        </select>
+     </td>
+   </tr>
+   <tr>
+     <td class="key"> Volunteers </td>
+     <td class="value">
+        <select name="volunteers" value="new_volunteer">
+         {% for u in users %}
+          <option value="{{ u.user_id }}"> {{ u }}</option>
+         {% endfor %}
+          <option value="new_volunteer" selected="selected">Add new volunteer</option>
+        </select>
+     </td>
+   </tr>
+  </table>
+   <table class="files">
+    {% for f, v in users.0.get_fields %}
+     {% if f.name != 'user_type' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+   </table>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="add" value="Add" />
+   <input class="button" type="submit" name="submit" value="Submit" />
+ </form>
+{% endblock %}
+

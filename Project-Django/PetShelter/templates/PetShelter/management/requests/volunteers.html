@@ -1,0 +1,31 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Volunteer requests - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  Volunteer requests
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'man_req_volunteers' %}">
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="volunteers" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+    {% for v in volunteers %}
+     <li>
+       <input id="{{ v.id }}" type="checkbox" name="volunteers" />
+       <label for="{{ v.id }}"><a href="{% url 'man_req_volunteer' v.staff.user_id %}">{{ v }}</a></label>
+     </li>
+    {% endfor %}
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="reject" value="Reject" />
+   <input class="button" type="submit" name="accept" value="Accept" />
+ </form>
+{% endblock %}
+

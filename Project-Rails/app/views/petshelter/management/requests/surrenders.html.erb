@@ -1,0 +1,33 @@
+<% content_for :title do %>
+  Manage surrender requests - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  Surrender requests
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_req_surrenders'}, {:multipart => true}) do %>
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="surrenders" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+     <% @surrenders.each do |surrender| %>
+      <li>
+       <input id="<%= surrender.id %>" type="checkbox" name="<%= surrender %>" />
+       <label for="<%= surrender.id %>">
+        <%= link_to surrender, action: 'man_req_surrender', surrender_id: surrender %>
+       </label>
+      </li>
+     <% end %>
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="reject" value="Reject" />
+   <input class="button" type="submit" name="accept" value="Accept" />
+ <% end %>
+<% end %>
+

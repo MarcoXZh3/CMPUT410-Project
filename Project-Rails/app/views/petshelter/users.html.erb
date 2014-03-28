@@ -1,0 +1,24 @@
+<% content_for :title do %>
+  All users - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  Users
+<% end %>
+
+<% content_for :content_block do %>
+  <ul class="users">
+   <% @users.each do |user| %>
+    <li><div>
+      <% if user.user_type != 'USER' %>
+       <%= link_to user, action: 'staff', staff_id: user %>(<%= user.user_type %>)
+      <% else %>
+       <%= link_to user, action: 'user', user_id: user %>
+      <% end %>
+    <div></li>
+   <% end %>
+  </ul>
+<% end %>
+

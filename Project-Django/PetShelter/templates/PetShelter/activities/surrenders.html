@@ -1,0 +1,25 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Surrenders - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Surrenders
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for s in surrenders %}
+   <li><div>
+     <a href="{% url 'act_surrender' s.id %}">{{ s }}</a>
+     {% if s.surrender_date == None %}
+       (Hanging request)
+     {% elif s.accepted == False %}
+       (Not accepted)
+     {% endif %}
+   <div></li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

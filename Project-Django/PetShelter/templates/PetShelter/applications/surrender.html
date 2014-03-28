@@ -1,0 +1,84 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Surrender animals - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;&nbsp;Applications&nbsp;&gt;
+  Surrender animals
+{% endblock %}
+
+{% block body %}
+ {% if status != None %}
+   <p id="status" class="files"> {{ status }} </p>
+ {% else %}
+   <p id="status" class="files" style="display:none;"> Success </p>
+ {% endif %}
+ <form method='POST' action="{% url 'app_surrender' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+   <select id="sas" class="files" name="sas"></select>
+   <table class="files">
+    {% for f, v in animal.get_fields %}
+     {% if f.name != 'animal_id' and f.name != 'adopted_price' and f.name != 'stage' and f.name != 'shelter' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="a_gender" value="male" checked="checked" id="a_male" />
+          <label for="a_male"> Male </label>
+          <input type="radio" name="a_gender" value="female" id="a_female" />
+          <label for="a_female"> Female </label>
+         {% elif f.name == 'spayed_or_neutered' %}
+          <input type="checkbox" name="spayed_or_neutered" id="spayed_or_neutered" />
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+      <tr>
+        <td class="key"> photos </td>
+        <td class="value">
+          {{ form }}
+        </td>
+      </tr>
+      <tr>
+        <td class="key"> reason </td>
+        <td class="value">
+          <input type="text" name="reason" />
+        </td>
+      </tr>
+   </table>
+   <input id="add" class="button" type="button" name="add" value="Add" />
+   <input id="remove" class="button" type="button" name="remove" value="Remove" />
+   <input id="edit" class="button" type="button" name="edit" value="Edit" />
+   <table class="files">
+    {% for f, v in people.get_fields %}
+     {% if f.name != 'user_type' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+   </table>
+   <input id="reset" class="submit" type="reset" value="Reset form" />
+   <input id="submit" class="submit" type="submit" value="Submit" />
+ </form>
+{% endblock %}
+
+{% block javascript %}
+ <script src="{% static 'PetShelter/javascript/app_surrender.js' %}"></script>
+{% endblock %}
+

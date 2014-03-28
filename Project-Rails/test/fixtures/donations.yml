@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  apply_date: 2014-03-26
+  people_id: 
+  donation_type: MyString
+  content: MyText
+  animal_id: 
+  donation_date: 2014-03-26
+  accepted: false
+
+two:
+  apply_date: 2014-03-26
+  people_id: 
+  donation_type: MyString
+  content: MyText
+  animal_id: 
+  donation_date: 2014-03-26
+  accepted: false

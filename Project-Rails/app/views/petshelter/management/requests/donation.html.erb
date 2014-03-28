@@ -1,0 +1,39 @@
+<% content_for :title do %>
+  Manage donation request - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Management', action: 'management' %>&nbsp;&gt;
+  <%= link_to 'Donation requests', action: 'man_req_donations' %>&nbsp;&gt;
+  <%= @donation %>
+<% end %>
+
+<% content_for :content_block do %>
+ <%= form_tag({action: 'man_req_donation', donation_id: @donation}, {:multipart => true}) do %>
+   <table>
+    <% @donation.attributes.each_pair do |name, value| %>
+     <% if name != 'id' and name != 'accepted' and name != 'donation_date' and
+           name != 'created_at' and name != 'updated_at' %>
+     <tr>
+       <td class="key"><%= name %></td>
+       <td class="value">
+        <% if name == 'people_id' %>
+         <%= link_to @donation.people, action: 'user', user_id: @donation.people %>
+        <% elsif name == 'animal_id' and @donation.animal != nil %>
+         <%= link_to @donation.animal, action: 'animal',
+                     species: @donation.animal.species, animal_id: @donation.animal.animal_id %>
+        <% else %>
+         <%= value %>
+        <% end %>
+       </td>
+     </tr>
+     <% end %>
+    <% end %>
+   </table>
+   <input class="submit" type="submit" name="reject" value="Reject" />
+   <input class="submit" type="submit" name="accept" value="Accept" />
+ <% end %>
+<% end %>
+

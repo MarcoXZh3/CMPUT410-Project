@@ -1,0 +1,50 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Volunteer - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;&nbsp;Applications&nbsp;&gt;
+  Volunteer
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'app_volunteer' %}">
+  {% csrf_token %}
+   <ul class="files">
+    {% for shelter in shelters %}
+     <li>
+       <input type="radio" name="shelter" id="{{ shelter.shelter_id }}" />
+       <label for="{{ shelter.shelter_id }}">
+         <a href="{% url 'shelter' shelter.shelter_id %}">
+           {{ shelter }}
+         </a>
+       </label>
+     </li>
+    {% endfor %}
+   </ul>
+   <table class="files">
+    {% for f, v in people.get_fields %}
+     {% if f.name != 'user_type' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+   </table>
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" value="Submit" />
+ </form>
+{% endblock %}
+

@@ -1,0 +1,41 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+ {% if s != None %}
+   Animals in species "{{ s }}" - PetShelter
+ {% else %}
+   All animals - PetShelter
+ {% endif %}
+{% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;
+  {% if s == None %}
+   Animals
+  {% else %}
+   <a href="{% url 'animals' %}">Animals</a> ({{ s }})
+  {% endif%}
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for animal in animals %}
+   <li>
+     <a href="{% url 'animal_species' animal.species animal.animal_id %}">
+      {% for f in files %}
+       {% if f.animal == animal %}
+        <img class="media" src="{% static f.path %}" alt="{{ f.path }}" />
+       {% endif %}
+      {% endfor %}
+      {{ animal }}
+     </a>
+     {% if animal.stage != True %}
+      (Not available)
+     {% endif %}
+   </li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

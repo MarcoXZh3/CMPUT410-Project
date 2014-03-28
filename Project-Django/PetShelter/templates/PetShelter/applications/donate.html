@@ -1,0 +1,80 @@
+{% extends "PetShelter/base.html" %}
+{% load staticfiles %}
+
+{% block title %} Donate {{ donate_type }} - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{% url 'index' %}">Home</a>&nbsp;&gt;&nbsp;Applications&nbsp;&gt;
+  <a href="{%url 'app_donates' %}">Donate</a>&nbsp;&gt;
+  {{ donate_type|capfirst }}
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'app_donate' donate_type %}">
+  {% csrf_token %}
+   <table class="files">
+      <tr>
+        <td class="key">type</td>
+        <td class="value">{{ donate_type }}</td>
+      </tr>
+      <tr>
+        <td class="key">content</td>
+        <td class="value">
+          <input type="text" name="d_content" />
+        </td>
+      </tr>
+      <tr>
+        <td class="key">to animal(s)</td>
+        <td class="value">
+          <input type="checkbox" name="d_ta" />
+        </td>
+      </tr>
+   </table>
+   <ul id="a_list" class="files">
+    {% for animal in animals %}
+     <li>
+       {% for f in files %}
+        {% if f.animal == animal %}
+         <a href="{% url 'animal_species' animal.species animal.animal_id %}">
+           <img class="media" src="{% static f.path %}" alt="{{ f.path }}" />
+         </a>
+        {% endif %}
+       {% endfor %}
+       <input type="checkbox" name="adoptions" id="{{ animal.animal_id }}" />
+       <label for="{{ animal.animal_id }}">
+         <a href="{% url 'animal_species' animal.species animal.animal_id %}">
+           {{ animal }}
+         </a>
+       </label>
+     </li>
+    {% endfor %}
+   </ul>
+   <select id="ds" class="files" name="ds"></select>
+   <input id="add" class="button" type="button" name="add" value="Add" />
+   <input id="remove" class="button" type="button" name="remove" value="Remove" />
+   <input id="edit" class="button" type="button" name="edit" value="Edit" />
+   <table class="files">
+    {% for f, v in people.get_fields %}
+     {% if f.name != 'user_type' %}
+      <tr>
+        <td class="key"> {{ f.name }} </td>
+        <td class="value">
+         {% if f.name == 'gender' %}
+          <input type="radio" name="gender" value="male" checked="checked" id="male" />
+          <label for="male"> Male </label>
+          <input type="radio" name="gender" value="female" id="female" />
+          <label for="female"> Female </label>
+         {% else %}
+          <input type="text" name="{{ f.name }}" />
+         {% endif %}
+        </td>
+      </tr>
+     {% endif %}
+    {% endfor %}
+   </table>
+   <input class="submit" type="reset" value="Reset form" />
+   <input class="submit" type="submit" value="Submit" />
+ </form>
+{% endblock %}
+

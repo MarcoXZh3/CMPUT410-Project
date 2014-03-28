@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title> <%= yield :title %> </title>
+  <%= stylesheet_link_tag "style" %>
+</head>
+<body>
+  <div id="logo">
+    Pet Shelter
+  </div>
+  <div id="container">
+    <ul id="menu">
+      <li class="mi li-level1"><%= link_to 'Animals', action: "animals", species: nil %><ul>
+       <% @all_species.each do |s| %>
+        <li class="mi li-level2"><%= link_to s.capitalize, action: "animals", species: s %></li>
+       <% end %>
+      </ul></li>
+      <li class="mi li-level1"> Activities <ul>
+        <li class="mi li-level2"><%= link_to 'Receipts', action: "act_receipts" %></li>
+        <li class="mi li-level2"><%= link_to 'Aoptions', action: 'act_adoptions' %></li>
+        <li class="mi li-level2"><%= link_to 'Surrenders', action: 'act_surrenders' %></li>
+        <li class="mi li-level2"><%= link_to 'Donations', action: 'act_donations' %></li>
+        <li class="mi li-level2"><%= link_to 'Volunteers', action: 'act_volunteers' %></li>
+      </ul></li>
+      <li class="mi li-level1"> Applications <ul>
+        <li class="mi li-level2"><%= link_to 'Adopt animals', action: 'app_adopt' %></li>
+        <li class="mi li-level2"><%= link_to 'Surrender animals', action: 'app_surrender' %></li>
+        <li class="mi li-level2"><%= link_to 'Donate', action: 'app_donates' %><ul>
+          <li class="mi li-level3"><%= link_to 'Money', action: 'app_donate', donate_type: 'money' %></li>
+          <li class="mi li-level3"><%= link_to 'Vet cares', action: 'app_donate', donate_type: 'vetcare' %></li>
+          <li class="mi li-level3"><%= link_to 'Items', action: 'app_donate', donate_type: 'items' %></li>
+        </ul></li>
+        <li class="mi li-level2"><%= link_to 'Volunteer', action: 'app_volunteer' %></li>
+      </ul></li>
+      <li class="mi li-level1"><%= link_to 'Shelters', action: 'shelters' %></li>
+      <li class="mi li-level1"><%= link_to 'Staffs', action: 'staffs' %></li>
+       <% if user_signed_in? %>
+        <li class="mi li-level1"><%= link_to 'Users', action: 'users' %></li>
+        <li class="mi li-level1"><%= link_to 'Management', action: 'management' %></li>
+        <li class="mi li-level1">
+          <%= link_to @login, action: 'staff', staff_id: @login %>
+          <span class="more"><%= link_to 'logout', destroy_user_session_path %></span>
+        </li>
+       <% else %>
+        <li class="mi li-level1"><%= link_to 'Staff login', action: 'login' %></li>
+       <% end %>
+    </ul>
+    <div>
+      <div class="subset" id="nav-bar"><%= yield :nav %></div>
+      <div class="subset"><%= yield :content_block %></div>
+    </div>
+  </div>
+  <%= yield :javascript %>
+</body>
+

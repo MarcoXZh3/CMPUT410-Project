@@ -1,0 +1,56 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Welcome to the "PetShelter" {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location: Home
+{% endblock %}
+
+{% block body %}
+  <div id="receive" class="event-wrapper"> Receipts
+    <span class="more"><a href="{% url 'act_receipts' %}"> More </a></span>
+    <ul class="event-list">
+     {% for receipt in receipts %}
+      <li><a href="{% url 'act_receipt' receipt.id %}"> {{ receipt }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="adopt" class="event-wrapper"> Adoptions
+    <span class="more"><a href="{% url 'act_adoptions' %}"> More </a></span>
+    <ul class="event-list">
+     {% for adoption in adoptions %}
+      <li><a href="{% url 'act_adoption' adoption.id %}"> {{ adoption }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="surrender" class="event-wrapper"> Surrenders
+    <span class="more"><a href="{% url 'act_surrenders' %}"> More </a></span>
+    <ul class="event-list">
+     {% for surrender in surrenders %}
+      <li><a href="{% url 'act_surrender' surrender.id %}"> {{ surrender }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="donate" class="event-wrapper"> Donations
+    <span class="more"><a href="{% url 'act_donations' %}"> More </a></span>
+    <ul class="event-list">
+     {% for donation in donations %}
+      <li><a href="{% url 'act_donation' donation.id %}"> {{ donation }} </a></li>
+     {% endfor %}
+    </ul>
+  </div>
+  <div id="volunteer" class="event-wrapper"> Volunteers
+    <span class="more"><a href="{% url 'act_volunteers' %}"> More </a></span>
+    <ul class="event-list">
+     {% for volunteer in volunteers %}
+      <li>
+        <a href="{% url 'act_volunteer' volunteer.staff.user_id %}"> {{ volunteer }} </a>
+        {% if volunteer.accepted != True %}
+         (Not accepted)
+        {% endif %}
+      </li>
+     {% endfor %}
+    </ul>
+  </div>
+{% endblock %}
+

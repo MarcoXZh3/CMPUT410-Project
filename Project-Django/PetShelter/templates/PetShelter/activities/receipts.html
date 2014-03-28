@@ -1,0 +1,20 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Receipts - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Recepts
+{% endblock %}
+
+{% block body %}
+ <ul>
+  {% for r in receipts %}
+   <li><div>
+     <a href="{% url 'act_receipt' r.id %}">{{ r }}</a>
+   <div></li>
+  {% endfor %}
+ </ul>
+{% endblock %}
+

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  people_id: 
+  animal_id: 
+  received_date: 2014-03-26
+
+two:
+  people_id: 
+  animal_id: 
+  received_date: 2014-03-26

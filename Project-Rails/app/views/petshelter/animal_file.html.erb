@@ -1,0 +1,25 @@
+<% content_for :title do %>
+  Gallery of "<%= @animal %>" - PetShelter
+<% end %>
+
+<% content_for :nav do %>
+  &nbsp;&nbsp;Current location:
+  <%= link_to 'Home', action: 'events' %>&nbsp;&gt;
+  <%= link_to 'Animals', action: 'animals', species: nil %>
+  (<%= link_to @species, action: 'animals', species: @species %>)&nbsp;&gt;
+  <%= link_to @animal, action: 'animal', species: @species, animal_id: @animal.animal_id %>&nbsp;&gt;
+  Gallery
+<% end %>
+
+<% content_for :content_block do %>
+ <div class="files">
+  <% if @file.file_type == 'VIDEO' %>
+   <%= video_tag @file.path, controls: 'controls' %>
+  <% elsif @file.file_type == 'AUDIO' %>
+   <%= audio_tag @file.path, controls: 'controls' %>
+  <% else %>
+   <%= image_tag @file.path %>
+  <% end %>
+ </div>
+<% end %>
+

@@ -1,0 +1,31 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} Surrender requests - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  <a href="{% url 'management' %}">Management</a>&nbsp;&gt;
+  Surrender requests
+{% endblock %}
+
+{% block body %}
+ <form method='POST' action="{% url 'man_req_surrenders' %}">
+   <ul class="files">
+     <li>
+       <input id="all" type="checkbox" name="surrenders" />
+       <label for="all"><strong>Select all</strong></label>
+     </li>
+    {% for s in surrenders %}
+     <li>
+       <input id="{{ s.id }}" type="checkbox" name="surrenders" />
+       <label for="{{ s.id }}"><a href="{% url 'man_req_surrender' s.id %}">{{ s }}</a></label>
+     </li>
+    {% endfor %}
+   </ul>
+   <input class="button" type="reset" value="Reset" />
+   <input class="button" type="submit" name="reject" value="Reject" />
+   <input class="button" type="submit" name="accept" value="Accept" />
+ </form>
+{% endblock %}
+

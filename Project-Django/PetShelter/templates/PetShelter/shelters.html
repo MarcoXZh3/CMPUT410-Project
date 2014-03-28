@@ -1,0 +1,20 @@
+{% extends "PetShelter/base.html" %}
+
+{% block title %} All shelters - PetShelter {% endblock %}
+
+{% block navbar %}
+  &nbsp;&nbsp;Current location:
+  <a href="{%url 'index'%}">Home</a>&nbsp;&gt;
+  Shelters
+{% endblock %}
+
+{% block body %}
+  <ul>
+   {% for s in shelters %}
+    <li><div>
+      <a href="{% url 'shelter' s.shelter_id %}">{{ s }}</a>
+    <div></li>
+   {% endfor %}
+  </ul>
+{% endblock %}
+
